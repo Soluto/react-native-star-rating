@@ -2,6 +2,7 @@
 import {
   StyleSheet,
   View,
+  Text
 } from 'react-native';
 
 import React, {
@@ -45,15 +46,27 @@ class StarRating extends Component {
     let starButtons = [];
 
     for (let i = 0; i < this.state.maxStars; i++) {
-      let starIconName = this.props.emptyStar;
-      let starColor = this.props.emptyStarColor;
+      let starIcon = this.props.emptyStar;         
 
       if (starsLeft >= 1) {
-        starIconName = this.props.fullStar;
-        starColor = this.props.starColor;
+        starIcon = this.props.fullStar;        
       } else if (starsLeft === 0.5) {
-        starIconName = this.props.halfStar;
-        starColor = this.props.starColor;
+        starIcon = this.props.halfStar;        
+      }
+
+      let starTitle = '';
+      let starTitleStyle = this.props.starTitlesUnselectedStyle;
+      if (this.props.rating == 0) {
+        if ((i+1) === 1) {
+          starTitle = this.props.starTitles[i];          
+        }
+        if ((i+1) === this.props.maxStars) {
+          starTitle = this.props.starTitles[i];          
+        }          
+      }
+      else if (this.props.rating==(i+1)) {
+        starTitle = this.props.starTitles[i];          
+        starTitleStyle = this.props.starTitleSelectedStyle;
       }
 
       starButtons.push(
@@ -62,11 +75,10 @@ class StarRating extends Component {
           disabled={this.props.disabled}
           key={i}
           rating={i + 1}
-          onStarButtonPress={this.onStarButtonPress}
-          iconSet={this.props.iconSet}
-          starSize={this.props.starSize}
-          starIconName={starIconName}
-          starColor={starColor}
+          onStarButtonPress={this.onStarButtonPress}         
+          starIcon={starIcon}          
+          starTitle={starTitle}
+          starTitleStyle={starTitleStyle}
         />
       );
       starsLeft--;
@@ -82,29 +94,24 @@ class StarRating extends Component {
 
 StarRating.propTypes = {
   disabled: PropTypes.bool,
-  emptyStar: PropTypes.string,
-  fullStar: PropTypes.string,
-  halfStar: PropTypes.string,
-  iconSet: PropTypes.string,
+  emptyStar: PropTypes.element,
+  fullStar: PropTypes.element,
+  halfStar: PropTypes.element,  
   maxStars: PropTypes.number,
   rating: PropTypes.number,
   selectedStar: PropTypes.func.isRequired,
-  starColor: PropTypes.string,
-  emptyStarColor: PropTypes.string,
-  starSize: PropTypes.number,
+  starTitles: PropTypes.arrayOf(PropTypes.string),
+  starTitlesUnselectedStyle: Text.propTypes.style,
+  starTitleSelectedStyle: Text.propTypes.style
 };
 
 StarRating.defaultProps = {
   disabled: false,
-  emptyStar: 'star-o',
-  fullStar: 'star',
-  halfStar: 'star-half-o',
-  iconSet: 'FontAwesome',
+  emptyStar: <Text>empty</Text>,
+  fullStar: <Text>full</Text>,
+  halfStar: <Text>half</Text>,  
   maxStars: 5,
-  rating: 0,
-  starColor: 'black',
-  emptyStarColor: 'gray',
-  starSize: 40,
+  rating: 0  
 };
 
 export default StarRating;

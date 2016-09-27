@@ -4,27 +4,15 @@ import React, {
   PropTypes,
 } from 'react';
 
+import {
+  View,  
+  Text,
+  StyleSheet  
+} from 'react-native';
+
+
 // Third party imports
 import Button from 'react-native-button';
-import EntypoIcons from 'react-native-vector-icons/Entypo';
-import EvilIconsIcons from 'react-native-vector-icons/EvilIcons';
-import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
-import FoundationIcons from 'react-native-vector-icons/Foundation';
-import IoniconsIcons from 'react-native-vector-icons/Ionicons';
-import MaterialIconsIcons from 'react-native-vector-icons/MaterialIcons';
-import OcticonsIcons from 'react-native-vector-icons/Octicons';
-import ZocialIcons from 'react-native-vector-icons/Zocial';
-
-const iconSets = {
-  Entypo: EntypoIcons,
-  EvilIcons: EvilIconsIcons,
-  FontAwesome: FontAwesomeIcons,
-  Foundation: FoundationIcons,
-  Ionicons: IoniconsIcons,
-  MaterialIcons: MaterialIconsIcons,
-  Octicons: OcticonsIcons,
-  Zocial: ZocialIcons,
-};
 
 class StarButton extends Component {
 
@@ -39,36 +27,38 @@ class StarButton extends Component {
   }
 
   render() {
-    const Icon = iconSets[this.props.iconSet];
-
     return (
-      <Button
-        activeOpacity={0.20}
-        disabled={this.props.disabled}
-        onPress={this.onButtonPress}
-        style={{
-          height: this.props.starSize,
-          width: this.props.starSize,
-        }}
-      >
-        <Icon
-          name={this.props.starIconName}
-          size={this.props.starSize}
-          color={this.props.starColor}
-        />
-      </Button>
+      <View style={style.container}>
+        <Text style={this.props.starTitleStyle}>{this.props.starTitle}</Text>
+        <Button
+          activeOpacity={0.20}
+          disabled={this.props.disabled}
+          onPress={this.onButtonPress}
+        >
+        {this.props.starIcon}        
+        </Button>
+      </View>
     );
   }
 }
 
+const style = StyleSheet.create({
+    container: {        
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+    }
+});
+
+
 StarButton.propTypes = {
   disabled: PropTypes.bool,
   rating: PropTypes.number,
-  onStarButtonPress: PropTypes.func,
-  iconSet: PropTypes.string,
-  starSize: PropTypes.number,
-  starIconName: PropTypes.string,
-  starColor: PropTypes.string,
+  onStarButtonPress: PropTypes.func,  
+  starIcon: PropTypes.element,
+  starTitle: PropTypes.string,
+  starTitleStyle: Text.propTypes.style
 };
 
 export default StarButton;
