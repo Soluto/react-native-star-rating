@@ -1,15 +1,15 @@
 // React and react native imports
 import React, {
-  Component,
-  PropTypes,
+  Component
 } from 'react';
+
+import PropTypes from 'prop-types';
 
 import {
   View,  
   Text,
   StyleSheet  
 } from 'react-native';
-
 
 // Third party imports
 import Button from 'react-native-button';
