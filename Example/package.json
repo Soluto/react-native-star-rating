@@ -8,7 +8,7 @@
     "clean-modules": "rm -rf node_modules"
   },
   "dependencies": {
-    "react": "15.2.0",
+    "react": "16.5.0",
     "react-native": "^0.29.0",
     "react-native-star-rating": "^1.0.6"
   },
